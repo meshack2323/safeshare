@@ -1,0 +1,14 @@
+<!-- templates/share.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Share Created - SafeShare</title>
+</head>
+<body>
+  <h1>✅ Share Link Created</h1>
+  <p>Copy and share this link. It will self-destruct after it's viewed once or after 1 hour:</p>
+  <input type="text" value="{{ url_for('view', share_id=share_id, _external=True) }}" readonly style="width: 100%;">
+  <br><br>
+  <a href="/">🔁 Create another</a>
+</body>
+</html>
