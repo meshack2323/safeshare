@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>SafeShare - Upload</title>
-  <script src="/static/safeshare.js"></script>
+  <title>SafeShare</title>
 </head>
 <body>
-  <h2>SafeShare - Secure Message/File Share</h2>
-  <textarea id="text" placeholder="Enter your message here"></textarea><br>
-  <input type="file" id="file"><br>
-  <input type="password" id="passcode" placeholder="Optional passcode"><br>
-  <button onclick="upload()">Upload & Generate Link</button>
-  <p id="link"></p>
+  <h1>SafeShare</h1>
+  <p>Share a message or file. It will self-destruct after one view or 1 hour.</p>
+
+  <form method="POST" action="/" enctype="multipart/form-data">
+    <label for="message">Text Message (optional):</label><br>
+    <textarea name="message" rows="4" cols="50"></textarea><br><br>
+
+    <label for="file">Upload File (optional):</label><br>
+    <input type="file" name="file"><br><br>
+
+    <label for="passcode">Passcode (optional):</label><br>
+    <input type="text" name="passcode"><br><br>
+
+    <button type="submit">Generate Share Link</button>
+  </form>
 </body>
 </html>
