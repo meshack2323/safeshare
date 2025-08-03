@@ -41,21 +41,20 @@ threading.Thread(target=clean_expired, daemon=True).start()
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        # Handle passcode
-        passcode = request.form.get('passcode') or ''
+        passcode = request.form.get('passcode', '')
         encoded_pass = passcode.encode()
+        share_id = str(uuid.uuid4())
 
-        # Handle file upload
+        # Check for file upload
         uploaded_file = request.files.get('file')
         if uploaded_file and uploaded_file.filename != '':
             filename = secure_filename(uploaded_file.filename)
-            share_id = str(uuid.uuid4())
-            file_path = os.path.join(UPLOAD_FOLDER, f"{share_id}_{filename}")
-            uploaded_file.save(file_path)
+            filepath = os.path.join(UPLOAD_FOLDER, f"{share_id}_{filename}")
+            uploaded_file.save(filepath)
 
             SHARE_DATA[share_id] = {
                 'type': 'file',
-                'path': file_path,
+                'path': filepath,
                 'filename': filename,
                 'expiry': time.time() + FILE_LIFESPAN_SECONDS,
                 'pass': cipher_suite.encrypt(encoded_pass)
@@ -63,10 +62,9 @@ def index():
 
             return render_template('share.html', share_id=share_id)
 
-        # Handle text message
-        message = request.form.get('message')
-        if message:
-            share_id = str(uuid.uuid4())
+        # Check for text message
+        message = request.form.get('message', '').strip()
+        if message != '':
             encrypted_msg = cipher_suite.encrypt(message.encode())
 
             SHARE_DATA[share_id] = {
@@ -78,7 +76,11 @@ def index():
 
             return render_template('share.html', share_id=share_id)
 
+        # Neither file nor message was provided
+        return "You must upload a file or enter a message.", 400
+
     return render_template('index.html')
+    
 
 
 @app.route('/view/<share_id>', methods=['GET', 'POST'])
