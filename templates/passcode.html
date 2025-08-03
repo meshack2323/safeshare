@@ -1,0 +1,15 @@
+<!-- templates/passcode.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Enter Passcode - SafeShare</title>
+</head>
+<body>
+  <h2>🔐 Enter Passcode</h2>
+  <form method="POST" action="/view/{{ share_id }}">
+    <input type="password" name="passcode" placeholder="Enter passcode" required>
+    <br><br>
+    <button type="submit">Unlock</button>
+  </form>
+</body>
+</html>
