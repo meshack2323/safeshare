@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SafeShare - View</title>
+  <script src="/static/safeshare.js"></script>
+</head>
+<body>
+  <h2>Decrypting...</h2>
+  <input type="password" id="passcode" placeholder="Enter passcode if needed"><br>
+  <button onclick="viewMessage('{{ msg_id }}')">View Message</button>
+  <div id="output"></div>
+</body>
+</html>
